@@ -66,6 +66,15 @@ class QuizGame:
                 print("✅ 정답입니다!")
             else:
                 print(f"❌ 오답입니다. 정답은 {quiz.answer}번 '{quiz.correct_choice()}' 입니다.")
+        self.show_result(correct, total)
+
+    def show_result(self, correct, total):
+        """모든 문제를 푼 뒤 정답 수와 점수(100점 만점)를 출력한다."""
+        score = round(correct / total * 100)
+        print("\n" + LINE)
+        print(f"🏆 결과: {total}문제 중 {correct}문제 정답! ({score}점)")
+        print(LINE)
+        return score
 
     def quit(self):
         print("\n👋 게임을 종료합니다. 다음에 또 만나요!")
