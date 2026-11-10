@@ -1,5 +1,6 @@
 """퀴즈 게임 전체 흐름(메뉴, 기능 선택, 종료)을 관리한다."""
 
+from default_quizzes import get_default_quizzes
 from input_utils import read_int
 
 LINE = "=" * 40
@@ -15,6 +16,7 @@ class QuizGame:
     )
 
     def __init__(self):
+        self.quizzes = get_default_quizzes()
         self.running = True
 
     def run(self):
