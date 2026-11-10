@@ -1,0 +1,37 @@
+jin03@ubuntu:~/workspace/E1-2$ git log --oneline --graph --all
+* e8be581 Docs: clone·pull 실습 결과와 Git 작업 로그(git-workflow.txt) README 반영
+* 2c1119d Docs: clone 실습 - 복제 저장소에서 README 실습 기록 한 줄 추가
+* 2ee11ed Docs: README 보고서 작성 (개요·주제·실행 방법·기능·파일 구조·state.json 스키마) 및 실행 스크린샷/로그 추가
+* fb7209f Test: unittest 단위 테스트 13개 추가 (Quiz, 입력 검증, state.json 저장·복구, 점수/히스토리)
+*   6c64aae Merge: feature/bonus 브랜치 병합 (랜덤·문제 수·힌트·삭제·히스토리)
+|\  
+| * 2807914 Feat: 점수 기록 히스토리 추가 (날짜/시간·문제 수·정답 수·힌트·점수 저장, 최근 5회 표시)
+| * a57e9d7 Feat: 퀴즈 삭제 기능 추가 (번호 선택·0 취소·y/n 확인 후 state.json 반영)
+| * 59ca4cd Feat: 힌트 기능 추가 (Quiz.hint 속성, 풀이 중 h 입력, 힌트 사용 시 문제당 점수 50% 차감)
+| * e502fdd Feat: 랜덤 출제와 문제 수 선택 기능 추가 (random.sample)
+|/  
+* 0062e76 Feat: state.json 저장/불러오기 구현 (UTF-8, 원자적 저장, 손상 파일 백업 후 기본 데이터 복구)
+* a2c5002 Refactor: QuizGame 클래스 구조 정리 (메뉴 디스패치 표, 출제/채점/입력 메서드 분리)
+* 6ba6f07 Feat: 점수 확인 기능 구현 (최고 점수 비교·갱신, 미응시 상태 처리)
+* e12ddc3 Feat: 퀴즈 목록 기능 구현 (번호별 문제 출력, 퀴즈 없음 처리)
+* 9e1335c Feat: 퀴즈 추가 기능 구현 (문제·선택지 4개·정답 번호 입력, 빈 값/중복/범위 검증)
+*   b694ddd Merge: feature/play 브랜치 병합 (퀴즈 풀기 기능)
+|\  
+| * 12a991d Feat: 퀴즈 풀기 결과 화면 추가 (정답 수·100점 환산 점수 표시)
+| * 4894de6 Feat: 퀴즈 풀기 기능 구현 (순서대로 출제, 정답 입력·채점)
+|/  
+* 6a67fe6 Feat: 기본 퀴즈 데이터 7개 작성 (터미널·Docker·Git·Python 주제, Quiz 인스턴스)
+* 2b20095 Feat: Quiz 클래스 구현 (문제/선택지/정답 속성, 출력·정답 확인 메서드)
+* 3d1e939 Feat: 메뉴 화면과 공통 입력 검증(공백/문자/범위/빈 입력, Ctrl+C·EOF) 구현
+* e1e1b33 Chore: 프로젝트 초기 설정 (.gitignore, README 생성)
+jin03@ubuntu:~/workspace/E1-2$ git log --oneline | wc -l
+21
+jin03@ubuntu:~/workspace/E1-2$ git branch -a
+  feature/bonus
+  feature/play
+* main
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/feature/bonus
+  remotes/origin/feature/play
+  remotes/origin/main
+jin03@ubuntu:~/workspace/E1-2$ 

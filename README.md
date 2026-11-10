@@ -489,7 +489,12 @@ feature/play ●───────●           \              /
 | 16 | `2807914` | feature/bonus | Feat: 점수 기록 히스토리 추가 (날짜/시간·문제 수·정답 수·힌트·점수 저장, 최근 5회 표시) |
 | 17 | `6c64aae` | main | Merge: feature/bonus 브랜치 병합 (랜덤·문제 수·힌트·삭제·히스토리) |
 | 18 | `fb7209f` | main | Test: unittest 단위 테스트 13개 추가 (Quiz, 입력 검증, state.json 저장·복구, 점수/히스토리) |
-| 19~ | | main | Docs: README 보고서, clone 실습, 스크린샷/로그 (아래 12장과 그래프 참고) |
+| 19 | `2ee11ed` | main | Docs: README 보고서 작성 (...) 및 실행 스크린샷/로그 추가 |
+| 20 | `2c1119d` | main (**clone 복제본에서**) | Docs: clone 실습 - 복제 저장소에서 README 실습 기록 한 줄 추가 |
+| 21 | `e8be581` | main | Docs: clone·pull 실습 결과와 Git 작업 로그(git-workflow.txt) README 반영 |
+| 22 | (최종) | main | Docs: git log 그래프 스크린샷 추가 및 커밋 표 완성 |
+
+**합계: 22개 커밋.** 기능 브랜치 커밋 6개와 merge 커밋 2개가 포함됩니다.
 
 미션의 "Git: ~ 후 커밋한다" 단계와 커밋의 대응:
 - 초기 설정 → 1
@@ -507,6 +512,8 @@ feature/play ●───────●           \              /
 ### 11-3. `git log --oneline --graph` 스크린샷
 
 ![git log graph](docs/screenshots/git_log_graph.png)
+
+> 21번째 커밋(`e8be581`)까지 진행한 시점에 캡처했습니다. 이 스크린샷을 추가하는 마지막 커밋(22번)은 GitHub 의 커밋 이력에서 확인할 수 있습니다.
 
 > 원본 텍스트: [`logs/git-log-graph.txt`](logs/git-log-graph.txt)
 
