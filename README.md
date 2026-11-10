@@ -542,6 +542,46 @@ feature/play ●───────●           \              /
 
 - (clone 실습) 이 줄은 `~/workspace/E1-2-clone` 에서 추가해 commit → push 한 변경입니다. 기존 작업 폴더에서는 `git pull` 로 받았습니다.
 
+실제 실행 기록입니다. 전체는 [`logs/git-workflow.txt`](logs/git-workflow.txt) 에 있습니다.
+
+```
+# ① clone — 별도 디렉터리로 복제
+$ cd ~/workspace && git clone https://github.com/JiNS03/E1-2.git E1-2-clone
+Cloning into 'E1-2-clone'...
+$ cd E1-2-clone && git log --oneline -1
+2ee11ed Docs: README 보고서 작성 (...)
+
+# ② 복제본에서 변경 → commit → push
+$ git diff --stat
+ README.md | 2 ++
+$ git add README.md
+$ git commit -m "Docs: clone 실습 - 복제 저장소에서 README 실습 기록 한 줄 추가"
+[main 2c1119d] Docs: clone 실습 - 복제 저장소에서 README 실습 기록 한 줄 추가
+$ git push
+   2ee11ed..2c1119d  main -> main
+
+# ③ 기존 작업 폴더에서 pull
+$ cd ~/workspace/E1-2 && git log --oneline -1   # pull 전
+2ee11ed Docs: README 보고서 작성 (...)
+$ git pull
+From https://github.com/JiNS03/E1-2
+   2ee11ed..2c1119d  main       -> origin/main
+Updating 2ee11ed..2c1119d
+Fast-forward
+ README.md | 2 ++
+
+# ④ 반영 확인
+$ git log --oneline -2   # pull 후
+2c1119d Docs: clone 실습 - 복제 저장소에서 README 실습 기록 한 줄 추가
+2ee11ed Docs: README 보고서 작성 (...)
+$ grep -n '(clone 실습)' README.md
+543:- (clone 실습) 이 줄은 `~/workspace/E1-2-clone` 에서 추가해 ...
+$ git status -sb
+## main...origin/main          ← 원격과 동일
+```
+
+**결과.** clone 한 복제본에서 만든 커밋 `2c1119d` 가 `git pull` 로 기존 작업 폴더에 반영됐습니다. 기존 폴더에는 새 로컬 커밋이 없었으므로 merge 커밋 없이 **Fast-forward** 로 반영되었습니다.
+
 ---
 
 ## 13. 테스트

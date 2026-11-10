@@ -1,0 +1,236 @@
+$ git init
+Initialized empty Git repository in /home/jin03/workspace/E1-2/.git/
+$ git remote add origin https://github.com/JiNS03/E1-2.git
+$ git remote -v
+origin	https://github.com/JiNS03/E1-2.git (fetch)
+origin	https://github.com/JiNS03/E1-2.git (push)
+
+$ git add -A
+$ git commit -m "Chore: 프로젝트 초기 설정 (.gitignore, README 생성)"
+[main (root-commit) e1e1b33] Chore: 프로젝트 초기 설정 (.gitignore, README 생성)
+ 2 files changed, 19 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 README.md
+
+$ git push -u origin main
+To https://github.com/JiNS03/E1-2.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+
+$ git add -A
+$ git commit -m "Feat: 메뉴 화면과 공통 입력 검증(공백/문자/범위/빈 입력, Ctrl+C·EOF) 구현"
+[main 3d1e939] Feat: 메뉴 화면과 공통 입력 검증(공백/문자/범위/빈 입력, Ctrl+C·EOF) 구현
+ 3 files changed, 106 insertions(+)
+ create mode 100644 game.py
+ create mode 100644 input_utils.py
+ create mode 100644 main.py
+
+$ git add -A
+$ git commit -m "Feat: Quiz 클래스 구현 (문제/선택지/정답 속성, 출력·정답 확인 메서드)"
+[main 2b20095] Feat: Quiz 클래스 구현 (문제/선택지/정답 속성, 출력·정답 확인 메서드)
+ 1 file changed, 31 insertions(+)
+ create mode 100644 quiz.py
+
+$ git add -A
+$ git commit -m "Feat: 기본 퀴즈 데이터 7개 작성 (터미널·Docker·Git·Python 주제, Quiz 인스턴스)"
+[main 6a67fe6] Feat: 기본 퀴즈 데이터 7개 작성 (터미널·Docker·Git·Python 주제, Quiz 인스턴스)
+ 2 files changed, 49 insertions(+)
+ create mode 100644 default_quizzes.py
+
+$ git checkout -b feature/play
+Switched to a new branch 'feature/play'
+$ git branch
+* feature/play
+  main
+
+$ git add -A
+$ git commit -m "Feat: 퀴즈 풀기 기능 구현 (순서대로 출제, 정답 입력·채점)"
+[feature/play 4894de6] Feat: 퀴즈 풀기 기능 구현 (순서대로 출제, 정답 입력·채점)
+ 1 file changed, 21 insertions(+), 1 deletion(-)
+
+$ git add -A
+$ git commit -m "Feat: 퀴즈 풀기 결과 화면 추가 (정답 수·100점 환산 점수 표시)"
+[feature/play 12a991d] Feat: 퀴즈 풀기 결과 화면 추가 (정답 수·100점 환산 점수 표시)
+ 1 file changed, 9 insertions(+)
+
+$ git checkout main
+Switched to branch 'main'
+Your branch is ahead of 'origin/main' by 3 commits.
+  (use "git push" to publish your local commits)
+$ git merge --no-ff feature/play -m "Merge: feature/play 브랜치 병합 (퀴즈 풀기 기능)"
+Merge made by the 'ort' strategy.
+ game.py | 31 ++++++++++++++++++++++++++++++-
+ 1 file changed, 30 insertions(+), 1 deletion(-)
+$ git log --oneline --graph -5
+*   b694ddd Merge: feature/play 브랜치 병합 (퀴즈 풀기 기능)
+|\  
+| * 12a991d Feat: 퀴즈 풀기 결과 화면 추가 (정답 수·100점 환산 점수 표시)
+| * 4894de6 Feat: 퀴즈 풀기 기능 구현 (순서대로 출제, 정답 입력·채점)
+|/  
+* 6a67fe6 Feat: 기본 퀴즈 데이터 7개 작성 (터미널·Docker·Git·Python 주제, Quiz 인스턴스)
+* 2b20095 Feat: Quiz 클래스 구현 (문제/선택지/정답 속성, 출력·정답 확인 메서드)
+$ git push
+To https://github.com/JiNS03/E1-2.git
+   e1e1b33..b694ddd  main -> main
+$ git push -u origin feature/play
+remote: 
+remote: Create a pull request for 'feature/play' on GitHub by visiting:        
+remote:      https://github.com/JiNS03/E1-2/pull/new/feature/play        
+remote: 
+To https://github.com/JiNS03/E1-2.git
+ * [new branch]      feature/play -> feature/play
+branch 'feature/play' set up to track 'origin/feature/play'.
+
+$ git add -A
+$ git commit -m "Feat: 퀴즈 추가 기능 구현 (문제·선택지 4개·정답 번호 입력, 빈 값/중복/범위 검증)"
+[main 9e1335c] Feat: 퀴즈 추가 기능 구현 (문제·선택지 4개·정답 번호 입력, 빈 값/중복/범위 검증)
+ 1 file changed, 19 insertions(+), 1 deletion(-)
+
+$ git add -A
+$ git commit -m "Feat: 퀴즈 목록 기능 구현 (번호별 문제 출력, 퀴즈 없음 처리)"
+[main e12ddc3] Feat: 퀴즈 목록 기능 구현 (번호별 문제 출력, 퀴즈 없음 처리)
+ 1 file changed, 13 insertions(+)
+
+$ git add -A
+$ git commit -m "Feat: 점수 확인 기능 구현 (최고 점수 비교·갱신, 미응시 상태 처리)"
+[main 6ba6f07] Feat: 점수 확인 기능 구현 (최고 점수 비교·갱신, 미응시 상태 처리)
+ 1 file changed, 28 insertions(+), 1 deletion(-)
+
+$ git add -A
+$ git commit -m "Refactor: QuizGame 클래스 구조 정리 (메뉴 디스패치 표, 출제/채점/입력 메서드 분리)"
+[main a2c5002] Refactor: QuizGame 클래스 구조 정리 (메뉴 디스패치 표, 출제/채점/입력 메서드 분리)
+ 1 file changed, 80 insertions(+), 62 deletions(-)
+
+$ git add -A
+$ git commit -m "Feat: state.json 저장/불러오기 구현 (UTF-8, 원자적 저장, 손상 파일 백업 후 기본 데이터 복구)"
+[main 0062e76] Feat: state.json 저장/불러오기 구현 (UTF-8, 원자적 저장, 손상 파일 백업 후 기본 데이터 복구)
+ 3 files changed, 158 insertions(+), 7 deletions(-)
+ create mode 100644 storage.py
+$ git push
+To https://github.com/JiNS03/E1-2.git
+   b694ddd..0062e76  main -> main
+
+$ git checkout -b feature/bonus
+Switched to a new branch 'feature/bonus'
+
+$ git add -A
+$ git commit -m "Feat: 랜덤 출제와 문제 수 선택 기능 추가 (random.sample)"
+[feature/bonus e502fdd] Feat: 랜덤 출제와 문제 수 선택 기능 추가 (random.sample)
+ 1 file changed, 9 insertions(+), 3 deletions(-)
+
+$ git add -A
+$ git commit -m "Feat: 힌트 기능 추가 (Quiz.hint 속성, 풀이 중 h 입력, 힌트 사용 시 문제당 점수 50% 차감)"
+[feature/bonus 59ca4cd] Feat: 힌트 기능 추가 (Quiz.hint 속성, 풀이 중 h 입력, 힌트 사용 시 문제당 점수 50% 차감)
+ 4 files changed, 81 insertions(+), 31 deletions(-)
+
+$ git add -A
+$ git commit -m "Feat: 퀴즈 삭제 기능 추가 (번호 선택·0 취소·y/n 확인 후 state.json 반영)"
+[feature/bonus a57e9d7] Feat: 퀴즈 삭제 기능 추가 (번호 선택·0 취소·y/n 확인 후 state.json 반영)
+ 1 file changed, 19 insertions(+), 1 deletion(-)
+
+$ git add -A
+$ git commit -m "Feat: 점수 기록 히스토리 추가 (날짜/시간·문제 수·정답 수·힌트·점수 저장, 최근 5회 표시)"
+[feature/bonus 2807914] Feat: 점수 기록 히스토리 추가 (날짜/시간·문제 수·정답 수·힌트·점수 저장, 최근 5회 표시)
+ 2 files changed, 58 insertions(+), 11 deletions(-)
+
+$ git checkout main
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+$ git merge --no-ff feature/bonus -m "Merge: feature/bonus 브랜치 병합 (랜덤·문제 수·힌트·삭제·히스토리)"
+Merge made by the 'ort' strategy.
+ default_quizzes.py |   7 +++
+ game.py            | 127 ++++++++++++++++++++++++++++++++++++++++++-----------
+ input_utils.py     |  30 +++++++------
+ quiz.py            |  18 ++++++--
+ storage.py         |  29 ++++++++++--
+ 5 files changed, 166 insertions(+), 45 deletions(-)
+$ git push
+To https://github.com/JiNS03/E1-2.git
+   0062e76..6c64aae  main -> main
+$ git push -u origin feature/bonus
+remote: 
+remote: Create a pull request for 'feature/bonus' on GitHub by visiting:        
+remote:      https://github.com/JiNS03/E1-2/pull/new/feature/bonus        
+remote: 
+To https://github.com/JiNS03/E1-2.git
+ * [new branch]      feature/bonus -> feature/bonus
+branch 'feature/bonus' set up to track 'origin/feature/bonus'.
+$ git branch -a
+  feature/bonus
+  feature/play
+* main
+  remotes/origin/feature/bonus
+  remotes/origin/feature/play
+  remotes/origin/main
+
+$ git add -A
+$ git commit -m "Test: unittest 단위 테스트 13개 추가 (Quiz, 입력 검증, state.json 저장·복구, 점수/히스토리)"
+[main fb7209f] Test: unittest 단위 테스트 13개 추가 (Quiz, 입력 검증, state.json 저장·복구, 점수/히스토리)
+ 2 files changed, 143 insertions(+)
+ create mode 100644 tests/__init__.py
+ create mode 100644 tests/test_quiz_game.py
+
+$ git add -A
+$ git commit -m "Docs: README 보고서 작성 (개요·주제·실행 방법·기능·파일 구조·state.json 스키마) 및 실행 스크린샷/로그 추가"
+[main 2ee11ed] Docs: README 보고서 작성 (개요·주제·실행 방법·기능·파일 구조·state.json 스키마) 및 실행 스크린샷/로그 추가
+ 23 files changed, 1203 insertions(+), 2 deletions(-)
+ create mode 100644 docs/screenshots/add_quiz.png
+ create mode 100644 docs/screenshots/corrupt_recovery.png
+ create mode 100644 docs/screenshots/ctrl_c.png
+ create mode 100644 docs/screenshots/delete.png
+ create mode 100644 docs/screenshots/dev_env.png
+ create mode 100644 docs/screenshots/list.png
+ create mode 100644 docs/screenshots/menu.png
+ create mode 100644 docs/screenshots/play.png
+ create mode 100644 docs/screenshots/restart.png
+ create mode 100644 docs/screenshots/score.png
+ create mode 100644 docs/screenshots/vscode.png
+ create mode 100644 docs/state.sample.json
+ create mode 100644 logs/dev-env.txt
+ create mode 100644 logs/run-01-menu.txt
+ create mode 100644 logs/run-02-add.txt
+ create mode 100644 logs/run-03-play.txt
+ create mode 100644 logs/run-04-restart.txt
+ create mode 100644 logs/run-05-delete.txt
+ create mode 100644 logs/run-06-ctrlc.txt
+ create mode 100644 logs/run-07-eof.txt
+ create mode 100644 logs/run-08-corrupt.txt
+ create mode 100644 logs/unittest.txt
+$ git push
+To https://github.com/JiNS03/E1-2.git
+   6c64aae..2ee11ed  main -> main
+
+$ cd ~/workspace && git clone https://github.com/JiNS03/E1-2.git E1-2-clone
+Cloning into 'E1-2-clone'...
+$ cd E1-2-clone && git log --oneline -1
+2ee11ed Docs: README 보고서 작성 (개요·주제·실행 방법·기능·파일 구조·state.json 스키마) 및 실행 스크린샷/로그 추가
+
+$ (E1-2-clone) README.md 12장에 한 줄 추가
+$ git diff --stat
+ README.md | 2 ++
+ 1 file changed, 2 insertions(+)
+$ git add README.md
+$ git commit -m "Docs: clone 실습 - 복제 저장소에서 README 실습 기록 한 줄 추가"
+[main 2c1119d] Docs: clone 실습 - 복제 저장소에서 README 실습 기록 한 줄 추가
+ 1 file changed, 2 insertions(+)
+$ git push
+To https://github.com/JiNS03/E1-2.git
+   2ee11ed..2c1119d  main -> main
+
+$ cd ~/workspace/E1-2 && git log --oneline -1   # pull 전
+2ee11ed Docs: README 보고서 작성 (개요·주제·실행 방법·기능·파일 구조·state.json 스키마) 및 실행 스크린샷/로그 추가
+$ git pull
+From https://github.com/JiNS03/E1-2
+   2ee11ed..2c1119d  main       -> origin/main
+Updating 2ee11ed..2c1119d
+Fast-forward
+ README.md | 2 ++
+ 1 file changed, 2 insertions(+)
+$ git log --oneline -2   # pull 후
+2c1119d Docs: clone 실습 - 복제 저장소에서 README 실습 기록 한 줄 추가
+2ee11ed Docs: README 보고서 작성 (개요·주제·실행 방법·기능·파일 구조·state.json 스키마) 및 실행 스크린샷/로그 추가
+$ grep -n 'clone 실습' README.md | head -3
+543:- (clone 실습) 이 줄은 `~/workspace/E1-2-clone` 에서 추가해 commit → push 한 변경입니다. 기존 작업 폴더에서는 `git pull` 로 받았습니다.
+$ git status -sb | head -1
+## main...origin/main
+
