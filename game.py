@@ -1,5 +1,7 @@
 """퀴즈 게임 전체 흐름(메뉴, 풀기/추가/목록/점수, 종료)을 관리하는 QuizGame 클래스."""
 
+import random
+
 from input_utils import read_int, read_text
 from quiz import Quiz
 from storage import StateStore
@@ -76,10 +78,14 @@ class QuizGame:
         """저장된 퀴즈를 출제하고, 끝나면 결과를 보여준다."""
         if not self.has_quizzes():
             return
-        total = len(self.quizzes)
-        print(f"\n📝 퀴즈를 시작합니다! (총 {total}문제)")
+        total = read_int(
+            f"\n몇 문제를 풀까요? (1-{len(self.quizzes)}): ", 1, len(self.quizzes)
+        )
+        # random.sample: 중복 없이 total 개를 무작위 순서로 뽑는다 (원본 리스트는 그대로)
+        selected = random.sample(self.quizzes, total)
+        print(f"\n📝 퀴즈를 시작합니다! (총 {total}문제, 무작위 순서)")
         correct = 0
-        for number, quiz in enumerate(self.quizzes, start=1):
+        for number, quiz in enumerate(selected, start=1):
             if self.ask_question(number, quiz):
                 correct += 1
         self.show_result(correct, total)
