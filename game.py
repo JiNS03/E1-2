@@ -2,7 +2,7 @@
 
 import random
 
-from input_utils import parse_int, read_int, read_text
+from input_utils import parse_int, read_int, read_text, read_yes_no
 from quiz import Quiz
 from storage import StateStore
 
@@ -26,6 +26,7 @@ class QuizGame:
             ("퀴즈 추가", self.add_quiz),
             ("퀴즈 목록", self.list_quizzes),
             ("점수 확인", self.show_score),
+            ("퀴즈 삭제", self.delete_quiz),
             ("종료", self.quit),
         ]
 
@@ -180,6 +181,23 @@ class QuizGame:
         for number, quiz in enumerate(self.quizzes, start=1):
             print(f"[{number}] {quiz.question}")
         print(THIN_LINE)
+
+    def delete_quiz(self):
+        """번호로 퀴즈를 골라 확인 후 삭제하고 파일에 반영한다. 0 은 취소."""
+        if not self.has_quizzes():
+            return
+        self.list_quizzes()
+        number = read_int(f"삭제할 퀴즈 번호 (1-{len(self.quizzes)}, 취소 0): ", 0, len(self.quizzes))
+        if number == 0:
+            print("↩️ 삭제를 취소했습니다.")
+            return
+        target = self.quizzes[number - 1]
+        if not read_yes_no(f"'{target.question}' 퀴즈를 삭제할까요? (y/n): "):
+            print("↩️ 삭제를 취소했습니다.")
+            return
+        self.quizzes.pop(number - 1)
+        self.save_state()
+        print(f"🗑️ 삭제했습니다. (남은 퀴즈 {len(self.quizzes)}개, state.json 반영)")
 
     def has_quizzes(self):
         """퀴즈가 하나도 없으면 안내 후 False."""
