@@ -29,3 +29,23 @@ class Quiz:
     def correct_choice(self):
         """정답 번호에 해당하는 선택지 문자열."""
         return self.choices[self.answer - 1]
+
+    def to_dict(self):
+        """JSON 으로 저장할 수 있는 dict 로 변환한다."""
+        return {"question": self.question, "choices": self.choices, "answer": self.answer}
+
+    @classmethod
+    def from_dict(cls, data):
+        """state.json 의 dict 한 개를 검증해서 Quiz 객체로 만든다. 형식이 틀리면 ValueError."""
+        if not isinstance(data, dict):
+            raise ValueError("퀴즈 항목이 객체가 아닙니다")
+        question = data["question"]
+        choices = data["choices"]
+        answer = data["answer"]
+        if not isinstance(question, str) or not question.strip():
+            raise ValueError("question 은 비어 있지 않은 문자열이어야 합니다")
+        if not isinstance(choices, list) or not all(isinstance(c, str) for c in choices):
+            raise ValueError("choices 는 문자열 리스트여야 합니다")
+        if isinstance(answer, bool) or not isinstance(answer, int):
+            raise ValueError("answer 는 정수여야 합니다")
+        return cls(question, choices, answer)

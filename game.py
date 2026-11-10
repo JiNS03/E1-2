@@ -1,20 +1,23 @@
 """퀴즈 게임 전체 흐름(메뉴, 풀기/추가/목록/점수, 종료)을 관리하는 QuizGame 클래스."""
 
-from default_quizzes import get_default_quizzes
 from input_utils import read_int, read_text
 from quiz import Quiz
+from storage import StateStore
 
 LINE = "=" * 40
 THIN_LINE = "-" * 40
 
 
 class QuizGame:
-    def __init__(self):
-        # 속성: 게임 상태
-        self.quizzes = get_default_quizzes()
+    def __init__(self, store=None):
+        # 속성: 게임 상태 (실제 값은 load_state 에서 state.json 으로부터 채운다)
+        self.store = store or StateStore()
+        self.quizzes = []
         self.best_score = None  # 아직 한 번도 풀지 않았으면 None
         self.best_detail = None  # {"correct": 정답 수, "total": 문제 수}
+        self.load_message = ""
         self.running = True
+        self.load_state()
         # 메뉴 번호 → (이름, 실행할 메서드). 메뉴 추가 시 이 표만 고치면 된다.
         self.menu = [
             ("퀴즈 풀기", self.play_quiz),
@@ -34,12 +37,29 @@ class QuizGame:
                 choice = read_int("선택: ", 1, len(self.menu))
                 self.handle_menu(choice)
         except (KeyboardInterrupt, EOFError):
-            print("\n\n⚠️ 입력이 중단되어 프로그램을 안전하게 종료합니다.")
+            print("\n\n⚠️ 입력이 중단되었습니다. 데이터를 저장하고 안전하게 종료합니다.")
+            if self.save_state():
+                print("💾 저장 완료")
 
     def print_title(self):
         print(LINE)
         print("        🎯 나만의 퀴즈 게임 🎯")
         print(LINE)
+        print(self.load_message)
+        print(LINE)
+
+    # ------------------------------------------------------------ 파일 저장/불러오기
+    def load_state(self):
+        """state.json 을 읽어 속성에 반영한다. 손상 복구 시에는 기본 데이터를 즉시 다시 저장한다."""
+        state, self.load_message, needs_save = self.store.load()
+        self.quizzes = state["quizzes"]
+        self.best_score = state["best_score"]
+        self.best_detail = state["best_detail"]
+        if needs_save:
+            self.save_state()
+
+    def save_state(self):
+        return self.store.save(self.quizzes, self.best_score, self.best_detail)
 
     def show_menu(self):
         print()
@@ -90,6 +110,7 @@ class QuizGame:
         else:
             print(f"   (최고 점수: {self.best_score}점)")
         print(LINE)
+        self.save_state()
         return score
 
     # ------------------------------------------------------------ 퀴즈 추가 / 목록
@@ -100,7 +121,10 @@ class QuizGame:
         choices = self.read_choices()
         answer = read_int(f"정답 번호 (1-{Quiz.CHOICE_COUNT}): ", 1, Quiz.CHOICE_COUNT)
         self.quizzes.append(Quiz(question, choices, answer))
-        print(f"\n✅ 퀴즈가 추가되었습니다! (현재 {len(self.quizzes)}개)")
+        if self.save_state():
+            print(f"\n✅ 퀴즈가 추가되었습니다! (현재 {len(self.quizzes)}개, state.json 저장됨)")
+        else:
+            print(f"\n✅ 퀴즈가 추가되었습니다. (현재 {len(self.quizzes)}개, 파일 저장은 실패)")
 
     @staticmethod
     def read_choices():
@@ -153,5 +177,6 @@ class QuizGame:
 
     # ------------------------------------------------------------ 종료
     def quit(self):
-        print("\n👋 게임을 종료합니다. 다음에 또 만나요!")
+        self.save_state()
+        print("\n👋 데이터를 저장했습니다. 게임을 종료합니다. 다음에 또 만나요!")
         self.running = False
