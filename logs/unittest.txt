@@ -1,0 +1,19 @@
+$ python3 -m unittest -v
+test_cases (tests.test_quiz_game.ParseIntTest.test_cases) ... ok
+test_best_score_only_increases (tests.test_quiz_game.QuizGameTest.test_best_score_only_increases) ... ok
+test_empty_quiz_list_is_handled (tests.test_quiz_game.QuizGameTest.test_empty_quiz_list_is_handled) ... ok
+test_play_all_correct_updates_and_persists (tests.test_quiz_game.QuizGameTest.test_play_all_correct_updates_and_persists) ... ok
+test_score_with_hint_penalty (tests.test_quiz_game.QuizGameTest.test_score_with_hint_penalty) ... ok
+test_dict_round_trip (tests.test_quiz_game.QuizTest.test_dict_round_trip) ... ok
+test_from_dict_rejects_bool_answer (tests.test_quiz_game.QuizTest.test_from_dict_rejects_bool_answer) ... ok
+test_invalid_quiz_raises (tests.test_quiz_game.QuizTest.test_invalid_quiz_raises) ... ok
+test_is_correct (tests.test_quiz_game.QuizTest.test_is_correct) ... ok
+test_broken_file_is_backed_up_and_recovered (tests.test_quiz_game.StateStoreTest.test_broken_file_is_backed_up_and_recovered) ... ok
+test_missing_file_uses_defaults (tests.test_quiz_game.StateStoreTest.test_missing_file_uses_defaults) ... ok
+test_save_then_load_keeps_data (tests.test_quiz_game.StateStoreTest.test_save_then_load_keeps_data) ... ok
+test_wrong_schema_is_treated_as_broken (tests.test_quiz_game.StateStoreTest.test_wrong_schema_is_treated_as_broken) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.002s
+
+OK
