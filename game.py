@@ -42,10 +42,30 @@ class QuizGame:
         print(LINE)
 
     def handle_menu(self, choice):
-        if choice == len(self.MENU):
+        if choice == 1:
+            self.play_quiz()
+        elif choice == len(self.MENU):
             self.quit()
         else:
             print(f"\n🚧 '{self.MENU[choice - 1]}' 기능은 준비 중입니다.")
+
+    def play_quiz(self):
+        """저장된 퀴즈를 순서대로 출제하고 정답 수를 센다."""
+        if not self.quizzes:
+            print("\n📭 등록된 퀴즈가 없습니다. 먼저 퀴즈를 추가하세요.")
+            return
+        total = len(self.quizzes)
+        print(f"\n📝 퀴즈를 시작합니다! (총 {total}문제)")
+        correct = 0
+        for number, quiz in enumerate(self.quizzes, start=1):
+            print("\n" + "-" * 40)
+            quiz.display(number)
+            answer = read_int(f"정답 입력 (1-{quiz.CHOICE_COUNT}): ", 1, quiz.CHOICE_COUNT)
+            if quiz.is_correct(answer):
+                correct += 1
+                print("✅ 정답입니다!")
+            else:
+                print(f"❌ 오답입니다. 정답은 {quiz.answer}번 '{quiz.correct_choice()}' 입니다.")
 
     def quit(self):
         print("\n👋 게임을 종료합니다. 다음에 또 만나요!")
