@@ -4,7 +4,9 @@
 {
   "quizzes":     [{"question": str, "choices": [str x4], "answer": 1~4}, ...],
   "best_score":  0~100 정수 또는 null(아직 안 풀었음),
-  "best_detail": {"correct": int, "total": int} 또는 null
+  "best_detail": {"correct": int, "total": int, "hints_used": int} 또는 null,
+  "history":     [{"played_at": "YYYY-MM-DD HH:MM:SS", "total": int, "correct": int,
+                   "hints_used": int, "score": int}, ...]
 }
 """
 
@@ -26,7 +28,12 @@ class StateStore:
 
     @staticmethod
     def default_state():
-        return {"quizzes": get_default_quizzes(), "best_score": None, "best_detail": None}
+        return {
+            "quizzes": get_default_quizzes(),
+            "best_score": None,
+            "best_detail": None,
+            "history": [],
+        }
 
     # ------------------------------------------------------------ 불러오기
     def load(self):
@@ -73,7 +80,20 @@ class StateStore:
                 raise ValueError("best_detail 형식이 올바르지 않습니다")
         else:
             best_detail = None
-        return {"quizzes": quizzes, "best_score": best_score, "best_detail": best_detail}
+
+        history = raw.get("history", [])  # 히스토리 기능 이전 파일에는 키가 없을 수 있다
+        record_keys = ("played_at", "total", "correct", "hints_used", "score")
+        if not isinstance(history, list) or not all(
+            isinstance(record, dict) and all(key in record for key in record_keys)
+            for record in history
+        ):
+            raise ValueError("history 형식이 올바르지 않습니다")
+        return {
+            "quizzes": quizzes,
+            "best_score": best_score,
+            "best_detail": best_detail,
+            "history": history,
+        }
 
     def backup_broken_file(self):
         """손상된 파일을 state.broken-<시각>.json 으로 옮겨 둔다(원인 분석용)."""
@@ -86,12 +106,13 @@ class StateStore:
             return None
 
     # ------------------------------------------------------------ 저장
-    def save(self, quizzes, best_score, best_detail):
+    def save(self, quizzes, best_score, best_detail, history):
         """상태를 state.json 에 저장한다. 성공하면 True, 쓰기 오류면 안내 후 False."""
         data = {
             "quizzes": [quiz.to_dict() for quiz in quizzes],
             "best_score": best_score,
             "best_detail": best_detail,
+            "history": history,
         }
         temp_path = self.path.with_name(self.path.name + ".tmp")
         try:
