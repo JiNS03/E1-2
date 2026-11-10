@@ -540,6 +540,8 @@ feature/play ●───────●           \              /
 
 ### 실습 기록
 
+- (clone 실습) 이 줄은 `~/workspace/E1-2-clone` 에서 추가해 commit → push 한 변경입니다. 기존 작업 폴더에서는 `git pull` 로 받았습니다.
+
 ---
 
 ## 13. 테스트
