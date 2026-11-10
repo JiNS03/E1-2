@@ -4,7 +4,7 @@
 class Quiz:
     CHOICE_COUNT = 4  # 선택지는 4개 고정, 정답은 1~4 번호로 관리
 
-    def __init__(self, question, choices, answer):
+    def __init__(self, question, choices, answer, hint=None):
         if len(choices) != self.CHOICE_COUNT:
             raise ValueError(f"선택지는 {self.CHOICE_COUNT}개여야 합니다.")
         if not 1 <= answer <= self.CHOICE_COUNT:
@@ -12,6 +12,10 @@ class Quiz:
         self.question = question
         self.choices = list(choices)
         self.answer = answer
+        self.hint = hint or None  # 빈 문자열도 "힌트 없음"으로 통일
+
+    def has_hint(self):
+        return self.hint is not None
 
     def display(self, number):
         """문제 번호와 함께 문제/선택지를 출력한다."""
@@ -32,7 +36,12 @@ class Quiz:
 
     def to_dict(self):
         """JSON 으로 저장할 수 있는 dict 로 변환한다."""
-        return {"question": self.question, "choices": self.choices, "answer": self.answer}
+        return {
+            "question": self.question,
+            "choices": self.choices,
+            "answer": self.answer,
+            "hint": self.hint,
+        }
 
     @classmethod
     def from_dict(cls, data):
@@ -48,4 +57,7 @@ class Quiz:
             raise ValueError("choices 는 문자열 리스트여야 합니다")
         if isinstance(answer, bool) or not isinstance(answer, int):
             raise ValueError("answer 는 정수여야 합니다")
-        return cls(question, choices, answer)
+        hint = data.get("hint")  # 힌트 기능 이전에 저장된 파일에는 hint 키가 없을 수 있다
+        if hint is not None and not isinstance(hint, str):
+            raise ValueError("hint 는 문자열 또는 null 이어야 합니다")
+        return cls(question, choices, answer, hint)

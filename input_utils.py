@@ -7,22 +7,26 @@ KeyboardInterrupt / EOFError 는 여기서 삼키지 않고 호출한 쪽(QuizGa
 """
 
 
+def parse_int(raw, low, high):
+    """공백 제거된 문자열을 검사해 (정수, None) 또는 (None, 안내 메시지) 를 반환한다."""
+    if raw == "":
+        return None, f"⚠️ 입력이 비어 있습니다. {low}-{high} 사이의 숫자를 입력하세요."
+    try:
+        value = int(raw)
+    except ValueError:
+        return None, f"⚠️ 잘못된 입력입니다. {low}-{high} 사이의 숫자를 입력하세요."
+    if not low <= value <= high:
+        return None, f"⚠️ 범위를 벗어났습니다. {low}-{high} 사이의 숫자를 입력하세요."
+    return value, None
+
+
 def read_int(prompt, low, high):
     """low~high 범위의 정수를 입력받아 반환한다."""
     while True:
-        raw = input(prompt).strip()
-        if raw == "":
-            print(f"⚠️ 입력이 비어 있습니다. {low}-{high} 사이의 숫자를 입력하세요.")
-            continue
-        try:
-            value = int(raw)
-        except ValueError:
-            print(f"⚠️ 잘못된 입력입니다. {low}-{high} 사이의 숫자를 입력하세요.")
-            continue
-        if not low <= value <= high:
-            print(f"⚠️ 범위를 벗어났습니다. {low}-{high} 사이의 숫자를 입력하세요.")
-            continue
-        return value
+        value, error = parse_int(input(prompt).strip(), low, high)
+        if error is None:
+            return value
+        print(error)
 
 
 def read_text(prompt):
