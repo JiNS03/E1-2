@@ -1,7 +1,8 @@
 """퀴즈 게임 전체 흐름(메뉴, 기능 선택, 종료)을 관리한다."""
 
 from default_quizzes import get_default_quizzes
-from input_utils import read_int
+from input_utils import read_int, read_text
+from quiz import Quiz
 
 LINE = "=" * 40
 
@@ -44,6 +45,8 @@ class QuizGame:
     def handle_menu(self, choice):
         if choice == 1:
             self.play_quiz()
+        elif choice == 2:
+            self.add_quiz()
         elif choice == len(self.MENU):
             self.quit()
         else:
@@ -75,6 +78,21 @@ class QuizGame:
         print(f"🏆 결과: {total}문제 중 {correct}문제 정답! ({score}점)")
         print(LINE)
         return score
+
+    def add_quiz(self):
+        """문제, 선택지 4개, 정답 번호를 입력받아 새 퀴즈를 등록한다."""
+        print("\n📌 새로운 퀴즈를 추가합니다.\n")
+        question = read_text("문제를 입력하세요: ")
+        choices = []
+        while len(choices) < Quiz.CHOICE_COUNT:
+            choice = read_text(f"선택지 {len(choices) + 1}: ")
+            if choice in choices:
+                print("⚠️ 이미 입력한 선택지입니다. 다른 내용을 입력하세요.")
+                continue
+            choices.append(choice)
+        answer = read_int(f"정답 번호 (1-{Quiz.CHOICE_COUNT}): ", 1, Quiz.CHOICE_COUNT)
+        self.quizzes.append(Quiz(question, choices, answer))
+        print(f"\n✅ 퀴즈가 추가되었습니다! (현재 {len(self.quizzes)}개)")
 
     def quit(self):
         print("\n👋 게임을 종료합니다. 다음에 또 만나요!")
