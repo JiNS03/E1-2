@@ -54,11 +54,11 @@
 | 제출물 | 개발 환경 스크린샷 | ✅ | `docs/screenshots/vscode.png`, `dev_env.png` |
 | 제출물 | 실행 결과 스크린샷 (추가/목록/플레이/점수) | ✅ | `docs/screenshots/*.png` |
 | 제출물 | `git log --oneline --graph` 스크린샷 | ✅ | `docs/screenshots/git_log_graph.png` |
-| 보너스 | 랜덤 출제 | ✅ | `random.sample` |
-| 보너스 | 문제 수 선택 | ✅ | "몇 문제를 풀까요?" |
-| 보너스 | 힌트 + 점수 차감 | ✅ | `h` 입력, 힌트 쓴 문제는 0.5점 |
-| 보너스 | 퀴즈 삭제 | ✅ | 메뉴 5 |
-| 보너스 | 점수 기록 히스토리 | ✅ | `history` 필드, 메뉴 4에 최근 5회 |
+| 🎁 **보너스** | 랜덤 출제 | ✅ | `random.sample` |
+| 🎁 **보너스** | 문제 수 선택 | ✅ | "몇 문제를 풀까요?" |
+| 🎁 **보너스** | 힌트 + 점수 차감 | ✅ | `h` 입력, 힌트 쓴 문제는 0.5점 |
+| 🎁 **보너스** | 퀴즈 삭제 | ✅ | 메뉴 5 |
+| 🎁 **보너스** | 점수 기록 히스토리 | ✅ | `history` 필드, 메뉴 4에 최근 5회 |
 
 ---
 
@@ -68,7 +68,8 @@
 |---|---|
 | 프로그램 | 터미널(콘솔) 4지선다 퀴즈 게임 |
 | 언어 | Python 3.10 이상 (실행 확인: Python 3.14.4), **표준 라이브러리만 사용** (`json`, `random`, `datetime`, `pathlib`, `os`, `unittest`) |
-| 핵심 기능 | 퀴즈 풀기 · 퀴즈 추가 · 퀴즈 목록 · 점수 확인 · (보너스) 삭제 · 종료 |
+| 핵심 기능 | (필수) 퀴즈 풀기 · 퀴즈 추가 · 퀴즈 목록 · 점수 확인 · 종료 |
+| 🎁 보너스 기능 | 랜덤 출제 · 문제 수 선택 · 힌트(점수 차감) · 퀴즈 삭제 · 점수 기록 히스토리 — **5개 모두 구현** |
 | 데이터 영속성 | 프로젝트 루트 `state.json` (UTF-8 JSON). 추가·삭제·풀이·종료할 때마다 자동 저장 |
 | 구조 | `Quiz`(문제 1개) · `QuizGame`(게임 진행) · `StateStore`(파일 입출력) + 입력 검증 모듈 |
 | 버전 관리 | Git + GitHub. 기능 단위 커밋, 기능 브랜치에서 작업 후 `main`에 병합 |
@@ -108,7 +109,7 @@ python3 main.py
 2. **이번 미션과 바로 이어지는 내용.** 6·7번은 이 프로그램에서 직접 쓰는 개념입니다(`dict`, `json.JSONDecodeError`). 문제를 만들면서 코드에서 왜 그 예외를 잡는지도 같이 설명하게 됩니다.
 3. **정답이 하나로 분명한 주제.** 명령어·개념 문제는 4지선다로 만들었을 때 정답이 애매하지 않습니다.
 
-각 문제에는 **힌트**(보너스)가 들어 있습니다. 예: 755 → "r=4, w=2, x=1 을 더해 자리별로 계산하세요."
+각 문제에는 **힌트**(🎁 보너스)가 들어 있습니다. 예: 755 → "r=4, w=2, x=1 을 더해 자리별로 계산하세요."
 
 ---
 
@@ -156,15 +157,29 @@ python3 -m unittest -v
 
 | 화면 | 입력 |
 |---|---|
-| 메뉴 | `1`~`6` (1 풀기, 2 추가, 3 목록, 4 점수, 5 삭제, 6 종료) |
-| 퀴즈 풀기 | 문제 수 `1`~`N` → 각 문제마다 정답 `1`~`4`, 힌트는 `h` |
-| 퀴즈 추가 | 문제 → 선택지 4개 → 정답 번호 → 힌트(선택, Enter로 생략) |
-| 퀴즈 삭제 | 번호 입력(`0`은 취소) → `y`/`n` 확인 |
+| 메뉴 | `1`~`6` (1 풀기, 2 추가, 3 목록, 4 점수, 5 삭제 🎁, 6 종료) |
+| 퀴즈 풀기 | 문제 수 `1`~`N` 🎁 → 각 문제마다 정답 `1`~`4`, 힌트는 `h` 🎁 |
+| 퀴즈 추가 | 문제 → 선택지 4개 → 정답 번호 → 힌트 🎁(선택, Enter로 생략) |
+| 퀴즈 삭제 🎁 | 번호 입력(`0`은 취소) → `y`/`n` 확인 |
 | 아무 때나 | `Ctrl+C` 또는 `Ctrl+D`: 저장 후 안전 종료 |
 
 ---
 
 ## 6. 기능 목록 (실행 화면)
+
+> **표시 규칙**: 미션의 **보너스 과제(선택)** 에 해당하는 항목에는 이 문서 전체에서 🎁 를 붙였습니다. 표시가 없는 항목은 필수 요구사항입니다.
+
+### 🎁 보너스 과제 수행 요약 (5/5 완료)
+
+| 보너스 과제 | 구현 내용 | 위치 | 커밋 | 화면 |
+|---|---|---|---|---|
+| 🎁 랜덤 출제 | `random.sample` 로 중복 없이 무작위 순서 출제 (원본 목록 순서는 유지) | `QuizGame.play_quiz` | `e502fdd` | [6-4](#6-4-퀴즈-풀기-play_quiz---보너스-랜덤-출제--문제-수-선택--힌트) |
+| 🎁 문제 수 선택 | "몇 문제를 풀까요? (1-N)", 범위 밖·문자는 재입력 | `QuizGame.play_quiz` | `e502fdd` | 6-4 |
+| 🎁 힌트 기능 + 점수 차감 | `Quiz.hint` 속성 추가, 풀이 중 `h` 입력, 힌트 쓰고 맞힌 문제는 0.5문제로 계산 | `Quiz`, `QuizGame.read_answer`, `calculate_score` | `59ca4cd` | 6-4 |
+| 🎁 퀴즈 삭제 | 메뉴 5, 번호 선택(0 취소) → y/n 확인 → `state.json` 반영 | `QuizGame.delete_quiz` | `a57e9d7` | [6-7](#6-7--보너스-퀴즈-삭제-delete_quiz) |
+| 🎁 점수 기록 히스토리 | 판마다 날짜/시간·문제 수·정답 수·힌트 수·점수를 `history` 에 저장, 메뉴 4에서 최근 5회 표시 | `QuizGame.record_history`, `show_score` | `2807914` | [6-5](#6-5-점수-확인-show_score--최고-점수---보너스-히스토리) |
+
+보너스 기능은 모두 `feature/bonus` 브랜치에서 개발해 `main` 에 병합했습니다(`6c64aae`).
 
 > **스크린샷 안내**
 > - `docs/screenshots/` 의 실행 화면은 WSL 터미널에서 `python3 main.py` 를 **실제 의사 터미널(PTY)로 실행**하고, 입력을 한 줄씩 넣어 기록한 화면 출력을 이미지로 옮긴 것입니다. 입력 에코까지 포함한 화면 그대로이고, 원본 텍스트는 `logs/run-*.txt` 에 있습니다.
@@ -189,21 +204,21 @@ python3 -m unittest -v
 
 ![퀴즈 목록](docs/screenshots/list.png)
 
-### 6-4. 퀴즈 풀기 (`play_quiz`) — 랜덤 출제 · 문제 수 선택 · 힌트
+### 6-4. 퀴즈 풀기 (`play_quiz`) + 🎁 보너스: 랜덤 출제 · 문제 수 선택 · 힌트
 
-1. 풀 문제 수를 고릅니다. 범위 밖(`0`)이면 다시 입력을 받습니다.
-2. `random.sample` 로 문제를 중복 없이 무작위 순서로 냅니다.
-3. 문제마다 정답/오답을 바로 알려주고, 틀리면 정답도 같이 보여줍니다.
-4. `h` 를 입력하면 힌트를 볼 수 있습니다. 힌트를 쓰고 맞힌 문제는 **0.5문제**로 계산합니다.
-5. 모든 문제를 풀면 결과를 보여주고, 최고 점수와 비교해 더 높으면 갱신합니다.
+1. 🎁 **[보너스: 문제 수 선택]** 풀 문제 수를 고릅니다. 범위 밖(`0`)이면 다시 입력을 받습니다.
+2. 🎁 **[보너스: 랜덤 출제]** `random.sample` 로 문제를 중복 없이 무작위 순서로 냅니다.
+3. (필수) 문제마다 정답/오답을 바로 알려주고, 틀리면 정답도 같이 보여줍니다.
+4. 🎁 **[보너스: 힌트]** `h` 를 입력하면 힌트를 볼 수 있습니다. 힌트를 쓰고 맞힌 문제는 **0.5문제**로 계산합니다.
+5. (필수) 모든 문제를 풀면 결과를 보여주고, 최고 점수와 비교해 더 높으면 갱신합니다.
 
 점수 = (정답 수 − 힌트로 맞힌 문제 수 × 0.5) ÷ 출제 수 × 100 (반올림). 아래 화면은 (4 − 0.5) ÷ 5 × 100 = **70점**입니다.
 
 ![퀴즈 풀기](docs/screenshots/play.png)
 
-### 6-5. 점수 확인 (`show_score`) — 최고 점수 + 히스토리
+### 6-5. 점수 확인 (`show_score`) — 최고 점수 + 🎁 보너스: 히스토리
 
-최고 점수와 그때의 정답 수, 그리고 최근 5회 게임 기록을 보여줍니다(날짜/시간, 정답 수, 힌트 수, 점수). 아직 한 번도 풀지 않았으면 "아직 퀴즈를 풀지 않았습니다"라고 안내합니다(6-1 화면의 `4` 입력 결과).
+(필수) 최고 점수와 그때의 정답 수를 보여주고, 🎁 **[보너스: 점수 기록 히스토리]** 최근 5회 게임 기록을 보여줍니다(날짜/시간, 정답 수, 힌트 수, 점수). 아직 한 번도 풀지 않았으면 "아직 퀴즈를 풀지 않았습니다"라고 안내합니다(6-1 화면의 `4` 입력 결과).
 
 ![점수 확인](docs/screenshots/score.png)
 
@@ -213,7 +228,7 @@ python3 -m unittest -v
 
 ![재실행 후 유지](docs/screenshots/restart.png)
 
-### 6-7. 퀴즈 삭제 (보너스, `delete_quiz`)
+### 6-7. 🎁 [보너스] 퀴즈 삭제 (`delete_quiz`)
 
 목록을 보여준 뒤 삭제할 번호를 받습니다. `0` 을 넣으면 취소됩니다. 삭제 전에 `y/n` 으로 한 번 더 확인하고, 삭제하면 `state.json` 에 바로 반영합니다.
 
@@ -294,10 +309,10 @@ E1-2/
 | `quizzes[].question` | str | 문제 (빈 문자열 불가) |
 | `quizzes[].choices` | list[str] | 선택지 **정확히 4개** |
 | `quizzes[].answer` | int | 정답 번호 **1~4** |
-| `quizzes[].hint` | str \| null | 힌트 (없으면 `null`) |
+| `quizzes[].hint` 🎁 | str \| null | 힌트 (없으면 `null`) — 보너스 |
 | `best_score` | int \| null | 최고 점수 0~100. 아직 풀지 않았으면 `null` |
 | `best_detail` | object \| null | 최고 점수일 때의 `{correct, total, hints_used}` |
-| `history` | list | 모든 게임 기록 (오래된 것 → 최신 순) |
+| `history` 🎁 | list | 모든 게임 기록 (오래된 것 → 최신 순) — 보너스 |
 | `history[].played_at` | str | `"YYYY-MM-DD HH:MM:SS"` |
 | `history[].total` / `correct` / `hints_used` / `score` | int | 출제 수 / 정답 수 / 힌트 사용 수 / 점수 |
 
@@ -403,12 +418,12 @@ input_utils (read_int / parse_int / read_text / read_yes_no) ← QuizGame 이 �
 | 구성 | 이름 | 설명 |
 |---|---|---|
 | 클래스 속성 | `CHOICE_COUNT = 4` | 선택지 개수. 숫자 4를 코드 곳곳에 직접 쓰지 않으려고 둔 상수 |
-| 속성 | `question`, `choices`, `answer`, `hint` | 문제 / 선택지 4개 / 정답 번호(1~4) / 힌트 |
+| 속성 | `question`, `choices`, `answer`, `hint` 🎁 | 문제 / 선택지 4개 / 정답 번호(1~4) / 힌트(보너스) |
 | `__init__` | 생성자 | 선택지 수와 정답 범위를 검증해서 **잘못된 Quiz 객체가 아예 만들어지지 않게** 함 |
 | 메서드 | `display(number)` | 문제와 선택지 출력 |
 | 메서드 | `is_correct(answer)` | 정답이면 True |
 | 메서드 | `correct_choice()` | 정답 선택지 문자열 (오답 안내용) |
-| 메서드 | `has_hint()` | 힌트가 있는지 |
+| 메서드 | `has_hint()` 🎁 | 힌트가 있는지 (보너스) |
 | 메서드 | `to_dict()` / `from_dict()` | JSON 저장용 dict 변환 / dict를 검증해서 객체로 복원 (`@classmethod`) |
 
 ### `QuizGame` (game.py)
@@ -418,9 +433,9 @@ input_utils (read_int / parse_int / read_text / read_yes_no) ← QuizGame 이 �
 | 속성 | `store`, `quizzes`, `best_score`, `best_detail`, `history`, `menu`, `running` | 게임 상태 |
 | 진행 | `run()` | 메인 루프. `KeyboardInterrupt`/`EOFError` 를 한 곳에서 처리 |
 | 진행 | `print_title()`, `show_menu()`, `handle_menu(choice)` | 제목·메뉴 출력, 메뉴 표에서 메서드를 찾아 실행 |
-| 풀기 | `play_quiz()` → `ask_question()` → `read_answer()` | 문제 수 선택, 랜덤 출제, 정답·힌트 입력 |
-| 채점 | `calculate_score()` (`@staticmethod`), `show_result()`, `update_best_score()`, `record_history()` | 점수 계산, 결과 출력, 최고 점수 갱신, 기록 추가 |
-| 관리 | `add_quiz()`, `read_choices()`, `list_quizzes()`, `delete_quiz()`, `has_quizzes()` | 추가·목록·삭제, 퀴즈가 없을 때 처리 |
+| 풀기 | `play_quiz()` → `ask_question()` → `read_answer()` | 출제·정답 입력 + 🎁 문제 수 선택, 랜덤 출제, 힌트 |
+| 채점 | `calculate_score()` (`@staticmethod`), `show_result()`, `update_best_score()`, `record_history()` 🎁 | 점수 계산(🎁 힌트 차감), 결과 출력, 최고 점수 갱신, 🎁 기록 추가 |
+| 관리 | `add_quiz()`, `read_choices()`, `list_quizzes()`, `delete_quiz()` 🎁, `has_quizzes()` | 추가·목록·🎁 삭제, 퀴즈가 없을 때 처리 |
 | 점수 | `show_score()` | 최고 점수와 최근 기록 |
 | 저장 | `load_state()`, `save_state()` | `StateStore` 에 위임 |
 | 종료 | `quit()` | 저장 후 루프 종료 |
@@ -503,7 +518,7 @@ feature/play ●───────●           \              /
 |---|---|---|
 | `main` | 초기 설정, 메뉴, Quiz, 기본 데이터, 추가/목록/점수, 리팩터링, 저장, 테스트, 문서 | — |
 | `feature/play` | 퀴즈 풀기 기능 (커밋 2개) | `git merge --no-ff` → `b694ddd` |
-| `feature/bonus` | 랜덤·문제 수, 힌트, 삭제, 히스토리 (커밋 4개) | `git merge --no-ff` → `6c64aae` |
+| `feature/bonus` 🎁 | **보너스 과제 전용 브랜치**: 랜덤·문제 수, 힌트, 삭제, 히스토리 (커밋 4개) | `git merge --no-ff` → `6c64aae` |
 
 - `--no-ff` 로 병합해서, 그래프에 "브랜치에서 작업하고 합쳤다"는 기록이 갈래 모양으로 남게 했습니다.
 - 두 기능 브랜치는 원격에도 push 해 두었습니다(`origin/feature/play`, `origin/feature/bonus`).
@@ -526,11 +541,11 @@ feature/play ●───────●           \              /
 | 10 | `6ba6f07` | main | Feat: 점수 확인 기능 구현 (최고 점수 비교·갱신, 미응시 상태 처리) |
 | 11 | `a2c5002` | main | Refactor: QuizGame 클래스 구조 정리 (메뉴 디스패치 표, 출제/채점/입력 메서드 분리) |
 | 12 | `0062e76` | main | Feat: state.json 저장/불러오기 구현 (UTF-8, 원자적 저장, 손상 파일 백업 후 기본 데이터 복구) |
-| 13 | `e502fdd` | feature/bonus | Feat: 랜덤 출제와 문제 수 선택 기능 추가 (random.sample) |
-| 14 | `59ca4cd` | feature/bonus | Feat: 힌트 기능 추가 (Quiz.hint 속성, 풀이 중 h 입력, 힌트 사용 시 문제당 점수 50% 차감) |
-| 15 | `a57e9d7` | feature/bonus | Feat: 퀴즈 삭제 기능 추가 (번호 선택·0 취소·y/n 확인 후 state.json 반영) |
-| 16 | `2807914` | feature/bonus | Feat: 점수 기록 히스토리 추가 (날짜/시간·문제 수·정답 수·힌트·점수 저장, 최근 5회 표시) |
-| 17 | `6c64aae` | main | Merge: feature/bonus 브랜치 병합 (랜덤·문제 수·힌트·삭제·히스토리) |
+| 13 | `e502fdd` | feature/bonus 🎁 | Feat: 랜덤 출제와 문제 수 선택 기능 추가 (random.sample) |
+| 14 | `59ca4cd` | feature/bonus 🎁 | Feat: 힌트 기능 추가 (Quiz.hint 속성, 풀이 중 h 입력, 힌트 사용 시 문제당 점수 50% 차감) |
+| 15 | `a57e9d7` | feature/bonus 🎁 | Feat: 퀴즈 삭제 기능 추가 (번호 선택·0 취소·y/n 확인 후 state.json 반영) |
+| 16 | `2807914` | feature/bonus 🎁 | Feat: 점수 기록 히스토리 추가 (날짜/시간·문제 수·정답 수·힌트·점수 저장, 최근 5회 표시) |
+| 17 | `6c64aae` | main 🎁 | Merge: feature/bonus 브랜치 병합 (랜덤·문제 수·힌트·삭제·히스토리) |
 | 18 | `fb7209f` | main | Test: unittest 단위 테스트 13개 추가 (Quiz, 입력 검증, state.json 저장·복구, 점수/히스토리) |
 | 19 | `2ee11ed` | main | Docs: README 보고서 작성 (...) 및 실행 스크린샷/로그 추가 |
 | 20 | `2c1119d` | main (**clone 복제본에서**) | Docs: clone 실습 - 복제 저장소에서 README 실습 기록 한 줄 추가 |
